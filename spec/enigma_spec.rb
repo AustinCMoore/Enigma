@@ -24,14 +24,14 @@ RSpec.describe Enigma do
   end
 
   it "creates the offset" do
-    expect(@enigma.create_offset("040895")).to be_instance_of Integer
-    expect(@enigma.create_offset("040895")).to eq(1025)
+    expect(@enigma.create_offset("040895")).to be_instance_of Array
+    expect(@enigma.create_offset("040895")).to eq([1,0,2,5])
   end
 
   it "returns a qty of digits" do
-    expect(@enigma.return_digits(4, 1672401025)).to be_instance_of Integer
+    expect(@enigma.return_digits(4, 1672401025)).to be_instance_of Array
     expect(@enigma.return_digits(4, 1672401025).length).to eq(4)
-    expect(@enigma.return_digits(4, 1672401025).length).to eq(1025)
+    expect(@enigma.return_digits(4, 1672401025)).to eq([1,0,2,5])
   end
 
   xit "can encrypt a message with a key and date" do
