@@ -1,23 +1,14 @@
 class Enigma
+  def todays_date
+    Date.today.strftime"%d%m%y"
+  end
 
-  def encrypt(message, key, date)#key defaults to random key, date defaults to today as DDMMYY
-  #given as string, so keep as string until given to key
-    #key
-      #validate given key (must be 5 digits)
-      #if key not given
-        #randomly generate key (class method?)
-      #if key < 5
-        #pad with zeroes until length == 5
-      #if key > 5
-        #? will only happen with user input
-    #date
-      #validate given date (must be 6 digits)
-      #if date not given
-        #Date.today.strftime"%d%m%y").to_i
-      #if date < 6
-        #? will only happen with user input
-      #if date > 6
-        #? will only happen with user input
+  def make_key
+    rand(99999).to_s.rjust(5, "0")
+  end
+
+  def encrypt(message, key = make_key, date = todays_date)
+    require "pry" ; binding.pry
     #message
       #receives a string, downcases it
       #shifts "valid" characters using sum of the offsets and the keys
