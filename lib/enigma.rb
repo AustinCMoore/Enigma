@@ -7,9 +7,22 @@ class Enigma
     rand(99999).to_s.rjust(5, "0")
   end
 
-  def encrypt(message, key = make_key, date = todays_date)
+  def create_offset(date)
+    return_digits(4, (date.to_i)**2)
+  end
 
-    require "pry" ; binding.pry
+  def return_digits(digit_qty, integer)#refactor this
+    ordered_digits = []
+    until digit_qty == 0
+      digit_qty -= 1
+      total_digits = integer.digits
+      ordered_digits << total_digits[digit_qty]
+    end
+    return ordered_digits
+  end
+
+  def encrypt(message, key = make_key, date = todays_date)
+    create_offset(date)
         #for the offsets (given 6 digit date as integer)
           #square the date
           #take the last 4 digits of that new number
