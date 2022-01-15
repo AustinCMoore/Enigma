@@ -34,6 +34,12 @@ RSpec.describe Enigma do
     expect(@enigma.return_digits(4, 1672401025)).to eq([1,0,2,5])
   end
 
+  it "splits the key" do
+    expect(@enigma.split_key("02715")).to be_instance_of Array
+    expect(@enigma.split_key("02715").length).to eq(4)
+    expect(@enigma.split_key("02715")).to eq([2, 27, 71, 15])
+  end
+
   xit "can encrypt a message with a key and date" do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
