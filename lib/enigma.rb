@@ -1,9 +1,7 @@
 class Enigma
 
-  def initialize
-  end
-
   def encrypt(message, key, date)#key defaults to random key, date defaults to today as DDMMYY
+  #given as string, so keep as string until given to key
     #key
       #validate given key (must be 5 digits)
       #if key not given
