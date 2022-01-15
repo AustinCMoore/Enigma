@@ -13,7 +13,12 @@ RSpec.describe Enigma do
 
   it "returns today's date as DDMMYY" do
     expect(@enigma.todays_date).to be_instance_of String
+    expect(@enigma.todays_date.length).to eq(6)
     expect(@enigma.todays_date).to eq(Date.today.strftime"%d%m%y")
+  end
+
+  it "creates random key" do
+
   end
 
   xit "can encrypt a message with a key and date" do
