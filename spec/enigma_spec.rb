@@ -20,7 +20,7 @@ RSpec.describe Enigma do
   it "makes random key" do
     expect(@enigma.make_key).to be_instance_of String
     expect(@enigma.make_key.length).to eq(5)
-    expect(@enigma.make_key).to eq(@key)#mock method to be created
+    # expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
   xit "can encrypt a message with a key and date" do
