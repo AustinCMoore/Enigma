@@ -17,8 +17,10 @@ RSpec.describe Enigma do
     expect(@enigma.todays_date).to eq(Date.today.strftime"%d%m%y")
   end
 
-  it "creates random key" do
-
+  it "makes random key" do
+    expect(@enigma.make_key).to be_instance_of Integer
+    expect(@enigma.make_key.length).to eq(5)
+    expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
   xit "can encrypt a message with a key and date" do
