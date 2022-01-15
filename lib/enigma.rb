@@ -21,8 +21,15 @@ class Enigma
     return ordered_digits
   end
 
+  def split_key(key)
+    key.chars.each_cons(2).map do |duo|
+      duo.join.to_i
+    end
+    # require "pry" ; binding.pry
+  end
+
   def encrypt(message, key = make_key, date = todays_date)
-    create_offset(date)
+    create_offset(date) #array of [A, B, C, D]
         #for the offsets (given 6 digit date as integer)
           #square the date
           #take the last 4 digits of that new number
