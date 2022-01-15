@@ -18,7 +18,7 @@ RSpec.describe Enigma do
   end
 
   it "makes random key" do
-    expect(@enigma.make_key).to be_instance_of Integer
+    expect(@enigma.make_key).to be_instance_of String
     expect(@enigma.make_key.length).to eq(5)
     expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
