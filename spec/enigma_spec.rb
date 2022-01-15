@@ -23,6 +23,17 @@ RSpec.describe Enigma do
     # expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
+  it "creates the offset" do
+    expect(@enigma.create_offset("040895")).to be_instance_of Integer
+    expect(@enigma.create_offset("040895")).to eq(1025)
+  end
+
+  it "returns a qty of digits" do
+    expect(@enigma.return_digits(4, 1672401025)).to be_instance_of Integer
+    expect(@enigma.return_digits(4, 1672401025).length).to eq(4)
+    expect(@enigma.return_digits(4, 1672401025).length).to eq(1025)
+  end
+
   xit "can encrypt a message with a key and date" do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
