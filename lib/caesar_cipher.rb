@@ -78,6 +78,10 @@ class CaesarCipher
     char_by_index((index_by_char(character) + shift) % char_set.length)
   end
 
+  def self.old_char(character, shift, char_set)
+    char_by_index((index_by_char(character) - shift) % char_set.length)
+  end
+
   def self.encode_message(message, shifts, char_set)
     encoded = ""
     message.each_char do |character|
@@ -91,7 +95,7 @@ class CaesarCipher
     return encoded
   end
 
-  def self.return_data(text, key, date)
+  def self.return_cipher(text, key, date)
     {
       encryption: text,
       key: key,
@@ -99,11 +103,39 @@ class CaesarCipher
     }
   end
 
+  def self.return_message(text, key, date)
+    {
+      decryption: text,
+      key: key,
+      date: date
+    }
+  end
+
+  def self.decode_cipher(cipher, shifts, char_set)
+    decoded = ""
+    cipher.each_char do |character|
+      if valid_char?(character)
+        decoded << old_char(character, shifts.first, char_set)
+        shifts = shifts.rotate
+      else
+        decoded << character
+      end
+    end
+    return decoded
+  end
+
   def self.encrypt(message, key, date)
     message = message.downcase
     shifts = find_shifts(split_keys(key), create_offset(date))
     char_set = make_char_set
     encoded = encode_message(message, shifts, char_set)
-    return_data(encoded, key, date)
+    return_cipher(encoded, key, date)
+  end
+
+  def self.decrypt(cipher, key, date)
+    shifts = find_shifts(split_keys(key), create_offset(date))
+    char_set = make_char_set
+    decoded = decode_cipher(cipher, shifts, char_set)
+    return_message(decoded, key, date)
   end
 end
