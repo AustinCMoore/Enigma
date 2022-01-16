@@ -21,6 +21,16 @@ class CaesarCipher
     end
   end
 
+  def self.find_shifts(keys, offsets) #refactor
+    shifts = []
+    i = 0
+    until i == 4
+      shifts << (keys[i] + offsets[i])%27
+      i += 1
+    end
+    return shifts
+  end
+
   #these will become helper methods in a new class
   # create_offset(date) #array of integers for [A, B, C, D]
   # split_keys(key) #array of integers for [A, B, C, D]
