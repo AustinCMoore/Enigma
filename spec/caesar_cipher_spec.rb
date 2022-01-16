@@ -10,6 +10,7 @@ RSpec.describe CaesarCipher do
     @char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
        "w", "x", "y", "z", " "]
+    @encoded_message = "keder ohulw"
   end
 
   it "exists" do
@@ -75,5 +76,14 @@ RSpec.describe CaesarCipher do
   it "encodes message" do
     expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to be_instance_of String
     expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to eq("keder ohulw")
+  end
+
+  it "formats as hash" do
+    expect(CaesarCipher.return_data(@encoded_message, "02715", "040895")).to be_instance_of Hash
+    expect(CaesarCipher.return_data(@encoded_message, "02715", "040895")).to eq({
+        encryption: "keder ohulw",
+        key: "02715",
+        date: "040895"
+      })
   end
 end

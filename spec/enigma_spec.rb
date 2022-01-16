@@ -22,7 +22,7 @@ RSpec.describe Enigma do
     # expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
-  xit "can encrypt a message with a key and date" do
+  it "can encrypt a message with a key and date" do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
       {
@@ -42,7 +42,7 @@ RSpec.describe Enigma do
       })
   end
 
-  it "can encrypt a message with a key" do
+  xit "can encrypt a message with a key" do
     expect(@enigma.encrypt("hello world", "02715")).to eq(
       {
         encryption: "refactor this", #needs a mock
