@@ -32,7 +32,7 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "can decrypt a message with a key and date" do
+  it "can decrypt a message with a key and date" do
     expect(@enigma.decrypt("keder ohulw", "02715", "040895")).to be_instance_of Hash
     expect(@enigma.decrypt("keder ohulw", "02715", "040895")).to eq(
       {
@@ -51,7 +51,7 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "can decrypt a message with a key" do
+  it "can decrypt a message with a key" do
     @encrypted = @enigma.encrypt("hello world", "02715")
     expect(@enigma.decrypt(@encrypted[:encryption], "02715")).to be_instance_of Hash
     expect(@enigma.decrypt(@encrypted[:encryption], "02715")).to eq(
@@ -62,7 +62,7 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "can encrypt a message" do
+  it "can encrypt a message" do
     expect(@enigma.encrypt("hello world")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world")).to eq(
       {

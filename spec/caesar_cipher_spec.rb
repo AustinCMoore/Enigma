@@ -11,6 +11,7 @@ RSpec.describe CaesarCipher do
        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
        "w", "x", "y", "z", " "]
     @encoded_message = "keder ohulw"
+    @decoded_message = "hello world"
   end
 
   it "exists" do
@@ -73,15 +74,34 @@ RSpec.describe CaesarCipher do
     expect(CaesarCipher.new_char('h', 3, @char_set)).to eq('k')
   end
 
+  it "returns old character" do
+    expect(CaesarCipher.old_char('k', 3, @char_set)).to be_instance_of String
+    expect(CaesarCipher.old_char('k', 3, @char_set)).to eq('h')
+  end
+
   it "encodes message" do
     expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to be_instance_of String
     expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to eq("keder ohulw")
   end
 
-  it "formats as hash" do
-    expect(CaesarCipher.return_data(@encoded_message, "02715", "040895")).to be_instance_of Hash
-    expect(CaesarCipher.return_data(@encoded_message, "02715", "040895")).to eq({
+  it "decodes cipher" do
+    expect(CaesarCipher.decode_cipher("keder ohulw", @shifts, @char_set)).to be_instance_of String
+    expect(CaesarCipher.decode_cipher("keder ohulw", @shifts, @char_set)).to eq("hello world")
+  end
+
+  it "returns hash with encoded message" do
+    expect(CaesarCipher.return_cipher(@encoded_message, "02715", "040895")).to be_instance_of Hash
+    expect(CaesarCipher.return_cipher(@encoded_message, "02715", "040895")).to eq({
         encryption: "keder ohulw",
+        key: "02715",
+        date: "040895"
+      })
+  end
+
+  it "returns hash with decoded message" do
+    expect(CaesarCipher.return_message(@decoded_message, "02715", "040895")).to be_instance_of Hash
+    expect(CaesarCipher.return_message(@decoded_message, "02715", "040895")).to eq({
+        decryption: "hello world",
         key: "02715",
         date: "040895"
       })
