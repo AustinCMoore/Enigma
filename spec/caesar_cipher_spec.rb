@@ -35,7 +35,7 @@ RSpec.describe CaesarCipher do
   it "finds the shift" do
     expect(CaesarCipher.find_shifts(@keys, @offsets)).to be_instance_of Array
     expect(CaesarCipher.find_shifts(@keys, @offsets).length).to eq(4)
-    expect(CaesarCipher.find_shifts(@keys, @offsets)).to eq([3, 0, 19, 20])
+    expect(CaesarCipher.find_shifts(@keys, @offsets)).to eq([3, 27, 73, 20])
   end
 
   it "creates a character set" do
@@ -54,5 +54,15 @@ RSpec.describe CaesarCipher do
   it "checks if character is valid" do
     expect(CaesarCipher.valid_char?('a')).to eq(true)
     expect(CaesarCipher.valid_char?(',')).to eq(false)
+  end
+
+  it "returns character's base index" do
+    expect(CaesarCipher.index_by_char('a')).to be_instance_of Integer
+    expect(CaesarCipher.index_by_char('a')).to eq(0)
+  end
+
+  it "returns shifted index's character" do
+    expect(CaesarCipher.char_by_index(0)).to be_instance_of String
+    expect(CaesarCipher.char_by_index(0)).to eq('a')
   end
 end
