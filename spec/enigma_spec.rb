@@ -4,7 +4,6 @@ require './lib/enigma'
 RSpec.describe Enigma do
   before (:each) do
     @enigma = Enigma.new
-    @key    = double("02715")
   end
 
   it "exists" do
@@ -29,15 +28,15 @@ RSpec.describe Enigma do
   end
 
   it "returns a qty of digits" do
-    expect(@enigma.return_digits(4, 1672401025)).to be_instance_of Array
-    expect(@enigma.return_digits(4, 1672401025).length).to eq(4)
-    expect(@enigma.return_digits(4, 1672401025)).to eq([1,0,2,5])
+    expect(@enigma.split_offset(1672401025)).to be_instance_of Array
+    expect(@enigma.split_offset(1672401025).length).to eq(4)
+    expect(@enigma.split_offset(1672401025)).to eq([1,0,2,5])
   end
 
   it "splits the key" do
-    expect(@enigma.split_key("02715")).to be_instance_of Array
-    expect(@enigma.split_key("02715").length).to eq(4)
-    expect(@enigma.split_key("02715")).to eq([2, 27, 71, 15])
+    expect(@enigma.split_keys("02715")).to be_instance_of Array
+    expect(@enigma.split_keys("02715").length).to eq(4)
+    expect(@enigma.split_keys("02715")).to eq([2, 27, 71, 15])
   end
 
   xit "can encrypt a message with a key and date" do
@@ -61,43 +60,32 @@ RSpec.describe Enigma do
   end
 
   xit "can encrypt a message with a key" do
-    expect(@enigma.encrypt("hello world", "02715")).to eq(@enigma.encrypt(
-        "hello world",
-        "02715",
-        @today
-      ))
-    # expect(@enigma.encrypt("hello world", "02715")).to eq(@enigma.encrypt(
-    #   "hello world",
-    #   "02715",
-    #   (Date.today.strftime"%d%m%y").to_i
-    #   ))
+    expect(@enigma.encrypt("hello world", "02715")).to eq(
+      {
+        encryption: "refactor this", #needs a mock
+        key: "02715",
+        date: @enigma.todays_date
+      })
   end
 
   xit "can decrypt a message with a key" do
-    expect(@enigma.decrypt(encrypted[:encryption], "02715")).to be_instance_of Hash
-    expect(@enigma.decrypt(encrypted[:encryption], "02715")).to eq(@enigma.decrypt(
-        encrypted[:encryption],
-        "02715",
-        @today
-      ))
-    # expect(@enigma.decrypt(encrypted[:encryption], "02715")).to eq(@enigma.decrypt(
-    #   encrypted[:encryption],
-    #   "02715",
-    #   (Date.today.strftime"%d%m%y").to_i
-    # ))
+    @encrypted = @enigma.encrypt("hello world", "02715")
+    expect(@enigma.decrypt(@encrypted[:encryption], "02715")).to be_instance_of Hash
+    expect(@enigma.decrypt(@encrypted[:encryption], "02715")).to eq(
+      {
+        decryption: "hello world",
+        key: "02715",
+        date: @enigma.todays_date
+      })
   end
 
   xit "can encrypt a message" do
     expect(@enigma.encrypt("hello world")).to be_instance_of Hash
-    expect(@enigma.encrypt("hello world")).to eq(@enigma.encrypt(
-      "hello world",
-      @key,
-      @today
-      ))
-    # expect(@enigma.encrypt("hello world")).to eq(@enigma.encrypt(
-    #   "hello world",
-    #   @enigma.encrypt("hello world")[:key],
-    #   (Date.today.strftime"%d%m%y").to_i
-    #   ))
+    expect(@enigma.encrypt("hello world")).to eq(
+      {
+        encryption: "refactor this", #needs a stub
+        key: "refactor this", #needs a stub
+        date: @enigma.todays_date
+      })
   end
 end
