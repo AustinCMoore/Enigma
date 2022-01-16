@@ -31,13 +31,28 @@ class CaesarCipher
     return shifts
   end
 
+  def self.character_set
+    characters = ("a".."z").to_a
+    characters << " "
+  end
+
+  def self.character_hash(characters)#refactor to enumerable
+    index = 0
+    index_by_character = Hash.new { |hash, key| hash[key] = 0 }
+    character_set.each do |character|
+      index_by_character[character] += index
+      index += 1
+    end
+    return index_by_character
+  end
+
   #we now have shifts as modulus in [A,B,C,D] format (no hash needed)
     #for character set (mix in)
       #designing as if we may one day want other characters
       #no need to enter characters, so we will use range to create
       #but we will create hash table for any given character set
       #hash table used to validate each character
-    
+
 
     #for a given message
       #receives as string, downcases it
