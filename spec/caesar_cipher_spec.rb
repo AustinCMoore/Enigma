@@ -30,8 +30,8 @@ RSpec.describe CaesarCipher do
   end
 
   it "finds the shift" do
-    expect(CaesarCipher.find_shift(@keys, @offsets)).to be_instance_of Array
-    expect(CaesarCipher.find_shift(@keys, @offsets).length).to eq(4)
-    expect(CaesarCipher.find_shift(@keys, @offsets)).to eq([3, 27, 73, 20])
+    expect(CaesarCipher.find_shifts(@keys, @offsets)).to be_instance_of Array
+    expect(CaesarCipher.find_shifts(@keys, @offsets).length).to eq(4)
+    expect(CaesarCipher.find_shifts(@keys, @offsets)).to eq([3, 0, 19, 20])
   end
 end
