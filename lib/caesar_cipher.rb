@@ -21,30 +21,32 @@ class CaesarCipher
     end
   end
 
-  def self.find_shifts(keys, offsets) #refactor
+  def self.find_shifts(keys, offsets) #refactor to work for any char_set
     shifts = []
     i = 0
     until i == 4
-      shifts << (keys[i] + offsets[i])%27
+      shifts << (keys[i] + offsets[i]) % 27 #replace integer with char_set.length
       i += 1
     end
     return shifts
   end
 
-  #these will become helper methods in a new class
-  # create_offset(date) #array of integers for [A, B, C, D]
-  # split_keys(key) #array of integers for [A, B, C, D]
+  #we now have shifts as modulus in [A,B,C,D] format (no hash needed)
+    #for character set (mix in)
+      #designing as if we may one day want other characters
+      #no need to enter characters, so we will use range to create
+      #but we will create hash table for any given character set
+      #hash table used to validate each character
+    
 
-      #for the shifts (each letter's shift)
-        #for each letter, sum each key and offset
-        #rotate corresponding letter set that # of positions
-        #message
-      #receives a string, downcases it
-      #shifts "valid" characters using sum of the offsets and the keys
+    #for a given message
+      #receives as string, downcases it
+      #until end of string
       #"validates" characters
         #Create valid letter set, containing all a,b,c...z AND SPACE
           #if character is in letter set
-            #use next shift ABCD
+            #use current shift
+            #rotate shift
           #if character is not in letter set
-            #skip entirely.
+            #next string character, do not shift
 end
