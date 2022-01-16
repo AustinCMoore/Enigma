@@ -6,6 +6,9 @@ RSpec.describe CaesarCipher do
     @caesar_cipher = CaesarCipher.new("hello world", "02715", "040895")
     @keys = [2,27,71,15]
     @offsets = [1,0,2,5]
+    @char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+       "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+       "w", "x", "y", "z", " "]
   end
 
   it "exists" do
@@ -33,5 +36,19 @@ RSpec.describe CaesarCipher do
     expect(CaesarCipher.find_shifts(@keys, @offsets)).to be_instance_of Array
     expect(CaesarCipher.find_shifts(@keys, @offsets).length).to eq(4)
     expect(CaesarCipher.find_shifts(@keys, @offsets)).to eq([3, 0, 19, 20])
+  end
+
+  it "creates a character set" do
+    expect(CaesarCipher.character_set).to be_instance_of Array
+    expect(CaesarCipher.character_set.length).to eq(27)
+    expect(CaesarCipher.character_set).to eq(@char_set)
+  end
+
+  it "creates a hash of characters" do
+    expect(CaesarCipher.character_hash(@char_set)).to be_instance_of Hash
+    expect(CaesarCipher.character_hash(@char_set).keys.length).to eq(27)
+    expect(CaesarCipher.character_hash(@char_set)['a']).to eq(0)
+    expect(CaesarCipher.character_hash(@char_set)[' ']).to eq(26)
+
   end
 end
