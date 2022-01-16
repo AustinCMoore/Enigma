@@ -36,7 +36,7 @@ class CaesarCipher
     characters << " "
   end
 
-  def self.character_hash(characters)#refactor to enumerable
+  def self.character_hash(characters)#refactor, passing in a char set is messy
     index = 0
     index_by_character = Hash.new { |hash, key| hash[key] = 0 }
     character_set.each do |character|
@@ -44,6 +44,10 @@ class CaesarCipher
       index += 1
     end
     return index_by_character
+  end
+
+  def self.valid_character?(character) #refactor above to improve
+    character_hash(character_set).has_key?(character)
   end
 
   #we now have shifts as modulus in [A,B,C,D] format (no hash needed)
