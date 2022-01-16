@@ -42,10 +42,11 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "can encrypt a message with a key" do
+  it "can encrypt a message with a key" do
+    @cipher = @enigma.encrypt("hello world", "02715", @enigma.todays_date)
     expect(@enigma.encrypt("hello world", "02715")).to eq(
       {
-        encryption: "refactor this", #needs a mock
+        encryption: @cipher[:encryption], #needs a mock
         key: "02715",
         date: @enigma.todays_date
       })
@@ -63,11 +64,13 @@ RSpec.describe Enigma do
   end
 
   it "can encrypt a message" do
+    allow(@enigma).to receive(:make_key).and_return('02715')
+    @encrypted = @enigma.encrypt("hello world", "02715")
     expect(@enigma.encrypt("hello world")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world")).to eq(
       {
-        encryption: "refactor this", #needs a stub
-        key: "refactor this", #needs a stub
+        encryption: @encrypted[:encryption], #needs a stub
+        key: '02715', #needs a stub
         date: @enigma.todays_date
       })
   end
