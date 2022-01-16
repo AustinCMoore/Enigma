@@ -49,6 +49,10 @@ RSpec.describe CaesarCipher do
     expect(CaesarCipher.character_hash(@char_set).keys.length).to eq(27)
     expect(CaesarCipher.character_hash(@char_set)['a']).to eq(0)
     expect(CaesarCipher.character_hash(@char_set)[' ']).to eq(26)
+  end
 
+  it "checks if character is valid" do
+    expect(CaesarCipher.valid_character?('a')).to eq(true)
+    expect(CaesarCipher.valid_character?(',')).to eq(false)
   end
 end
