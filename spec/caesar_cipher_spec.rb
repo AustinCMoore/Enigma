@@ -6,6 +6,7 @@ RSpec.describe CaesarCipher do
     @caesar_cipher = CaesarCipher.new("hello world", "02715", "040895")
     @keys = [2,27,71,15]
     @offsets = [1,0,2,5]
+    @shifts = [3, 27, 73, 20]
     @char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
        "w", "x", "y", "z", " "]
@@ -64,5 +65,15 @@ RSpec.describe CaesarCipher do
   it "returns shifted index's character" do
     expect(CaesarCipher.char_by_index(0)).to be_instance_of String
     expect(CaesarCipher.char_by_index(0)).to eq('a')
+  end
+
+  it "returns new character" do
+    expect(CaesarCipher.new_char('h', 3, @char_set)).to be_instance_of String
+    expect(CaesarCipher.new_char('h', 3, @char_set)).to eq('k')
+  end
+
+  it "encodes message" do
+    expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to be_instance_of String
+    expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to eq("keder ohulw")
   end
 end
