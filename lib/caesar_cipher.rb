@@ -3,11 +3,13 @@
 class CaesarCipher
   # include CharacterSet
 
-  def initialize(message, key, date)
+  def initialize(message, key, date) #do I need this? how can i use this
     @message = message
     @key     = key
     @date    = date
   end
+
+  #------------------------------------------------------
 
   def self.create_offset(date)
     split_offset((date.to_i)**2)
@@ -15,16 +17,17 @@ class CaesarCipher
 
   def self.split_offset(number)
     digits = number.digits
-    offset = [digits[3], digits[2], digits[1], digits[0]]
+    offset = [digits[3], digits[2], digits[1], digits[0]] #maybe different result class?
   end
 
   def self.split_keys(key)
-    key.chars.each_cons(2).map do |duo|
+    key.chars.each_cons(2).map do |duo| #maybe different result class?
       duo.join.to_i
     end
   end
 
-  def self.find_shifts(keys, offsets) #refactor to work for any char_set
+#this can be refactored
+  def self.find_shifts(keys, offsets)
     shifts = []
     i = 0
     until i == 4
@@ -33,7 +36,8 @@ class CaesarCipher
     end
     return shifts
   end
-
+  #----------------------------------------------------------
+#this can be a new module
   # def self.return_char_set
   #   make_char_set
   # end
@@ -42,12 +46,13 @@ class CaesarCipher
   #   make_char_hash(make_char_set)
   # end
 
-  def self.make_char_set
+#ordinal value?
+  def self.make_char_set #this is static
     characters = ("a".."z").to_a
     characters << " "
   end
 
-  def self.make_char_hash(characters)#refactor, passing in a char set is messy
+  def self.make_char_hash(characters) #this is also static?
     index = 0
     index_by_character = Hash.new { |hash, key| hash[key] = 0 }
     make_char_set.each do |character|
@@ -57,7 +62,7 @@ class CaesarCipher
     return index_by_character
   end
 
-  def self.valid_char?(character) #refactor above to improve
+  def self.valid_char?(character) #am i making new character set every time?
     make_char_hash(make_char_set).has_key?(character)
   end
 
@@ -69,38 +74,36 @@ class CaesarCipher
     make_char_set[index]
   end
 
-  def self.encrypt(message, key, date)
-    message = message.downcase
-    offsets = create_offset(date)
-    keys = split_keys(key)
-    shifts = find_shifts(keys, offsets)
-    char_set = make_char_set
-    char_hash = make_char_hash(char_set)
-
-    message.each_char do |character| #until end of string
-      if valid_char?(character) #true for valid character, false if not
-        char_by_index((index_by_char(character) + shifts.first) % char_set.length) #okay... shorten this
-      end
-    end
+  def self.new_char(character, shift, char_set)
+    char_by_index((index_by_char(character) + shift) % char_set.length)
   end
 
-  #we now have shifts as modulus in [A,B,C,D] format (no hash needed)
-    #for character set (mix in)
-      #designing as if we may one day want other characters
-      #no need to enter characters, so we will use range to create
-      #but we will create hash table for any given character set
-      #hash table used to validate each character
-      #what if we use ordinal values???
+  def self.encode_message(message, shifts, char_set)
+    encoded = ""
+    message.each_char do |character|
+      if valid_char?(character)
+        encoded << new_char(character, shifts.first, char_set)
+        shifts = shifts.rotate
+      else
+        encoded << character
+      end
+    end
+    return encoded
+  end
 
+  def self.return_data(text, key, date)
+    {
+      encryption: text,
+      key: key,
+      date: date
+    }
+  end
 
-    #for a given message
-      #receives as string, downcases it
-      #until end of string
-      #"validates" characters
-        #Create valid letter set, containing all a,b,c...z AND SPACE
-          #if character is in letter set
-            #use current shift
-            #rotate shift
-          #if character is not in letter set
-            #next string character, do not shift
+  def self.encrypt(message, key, date)
+    message = message.downcase
+    shifts = find_shifts(split_keys(key), create_offset(date))
+    char_set = make_char_set
+    encoded = encode_message(message, shifts, char_set)
+    return_data(encoded, key, date)
+  end
 end
