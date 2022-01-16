@@ -87,7 +87,7 @@ class CaesarCipher
     message.each_char do |character|
       if valid_char?(character)
         encoded << new_char(character, shifts.first, char_set)
-        shifts = shifts.rotate
+        shifts = shifts.rotate #refactor
       else
         encoded << character
       end

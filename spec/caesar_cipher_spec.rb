@@ -10,8 +10,8 @@ RSpec.describe CaesarCipher do
     @char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
        "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
        "w", "x", "y", "z", " "]
-    @encoded_message = "keder ohulw"
-    @decoded_message = "hello world"
+    @encoded_message = "keder, ohulw"
+    @decoded_message = "hello, world"
   end
 
   it "exists" do
@@ -80,19 +80,19 @@ RSpec.describe CaesarCipher do
   end
 
   it "encodes message" do
-    expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to be_instance_of String
-    expect(CaesarCipher.encode_message('hello world', @shifts, @char_set)).to eq("keder ohulw")
+    expect(CaesarCipher.encode_message('hello, world', @shifts, @char_set)).to be_instance_of String
+    expect(CaesarCipher.encode_message('hello, world', @shifts, @char_set)).to eq("keder, ohulw")
   end
 
   it "decodes cipher" do
-    expect(CaesarCipher.decode_cipher("keder ohulw", @shifts, @char_set)).to be_instance_of String
-    expect(CaesarCipher.decode_cipher("keder ohulw", @shifts, @char_set)).to eq("hello world")
+    expect(CaesarCipher.decode_cipher("keder, ohulw", @shifts, @char_set)).to be_instance_of String
+    expect(CaesarCipher.decode_cipher("keder, ohulw", @shifts, @char_set)).to eq("hello, world")
   end
 
   it "returns hash with encoded message" do
     expect(CaesarCipher.return_cipher(@encoded_message, "02715", "040895")).to be_instance_of Hash
     expect(CaesarCipher.return_cipher(@encoded_message, "02715", "040895")).to eq({
-        encryption: "keder ohulw",
+        encryption: "keder, ohulw",
         key: "02715",
         date: "040895"
       })
@@ -101,7 +101,7 @@ RSpec.describe CaesarCipher do
   it "returns hash with decoded message" do
     expect(CaesarCipher.return_message(@decoded_message, "02715", "040895")).to be_instance_of Hash
     expect(CaesarCipher.return_message(@decoded_message, "02715", "040895")).to eq({
-        decryption: "hello world",
+        decryption: "hello, world",
         key: "02715",
         date: "040895"
       })
