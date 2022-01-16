@@ -22,23 +22,6 @@ RSpec.describe Enigma do
     # expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
-  it "creates the offset" do
-    expect(@enigma.create_offset("040895")).to be_instance_of Array
-    expect(@enigma.create_offset("040895")).to eq([1,0,2,5])
-  end
-
-  it "returns a qty of digits" do
-    expect(@enigma.split_offset(1672401025)).to be_instance_of Array
-    expect(@enigma.split_offset(1672401025).length).to eq(4)
-    expect(@enigma.split_offset(1672401025)).to eq([1,0,2,5])
-  end
-
-  it "splits the key" do
-    expect(@enigma.split_keys("02715")).to be_instance_of Array
-    expect(@enigma.split_keys("02715").length).to eq(4)
-    expect(@enigma.split_keys("02715")).to eq([2, 27, 71, 15])
-  end
-
   xit "can encrypt a message with a key and date" do
     expect(@enigma.encrypt("hello world", "02715", "040895")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world", "02715", "040895")).to eq(
@@ -59,7 +42,7 @@ RSpec.describe Enigma do
       })
   end
 
-  xit "can encrypt a message with a key" do
+  it "can encrypt a message with a key" do
     expect(@enigma.encrypt("hello world", "02715")).to eq(
       {
         encryption: "refactor this", #needs a mock
