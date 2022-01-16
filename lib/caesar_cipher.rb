@@ -1,4 +1,7 @@
+# require "./character_set"
+
 class CaesarCipher
+  # include CharacterSet
 
   def initialize(message, key, date)
     @message = message
@@ -31,23 +34,31 @@ class CaesarCipher
     return shifts
   end
 
-  def self.character_set
+  # def self.return_char_set
+  #   make_char_set
+  # end
+  #
+  # def self.return_char_hash
+  #   make_char_hash(make_char_set)
+  # end
+
+  def self.make_char_set
     characters = ("a".."z").to_a
     characters << " "
   end
 
-  def self.character_hash(characters)#refactor, passing in a char set is messy
+  def self.make_char_hash(characters)#refactor, passing in a char set is messy
     index = 0
     index_by_character = Hash.new { |hash, key| hash[key] = 0 }
-    character_set.each do |character|
+    make_char_set.each do |character|
       index_by_character[character] += index
       index += 1
     end
     return index_by_character
   end
 
-  def self.valid_character?(character) #refactor above to improve
-    character_hash(character_set).has_key?(character)
+  def self.valid_char?(character) #refactor above to improve
+    make_char_hash(make_char_set).has_key?(character)
   end
 
   #we now have shifts as modulus in [A,B,C,D] format (no hash needed)

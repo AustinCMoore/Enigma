@@ -9,7 +9,7 @@ class Enigma
   end
 
   def decrypt(cipher, key, date = todays_date)
-    CaesarCipher.encrypt(cipher, key, date)
+    CaesarCipher.decrypt(cipher, key, date)
   end
 
 end

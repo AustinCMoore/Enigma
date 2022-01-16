@@ -39,20 +39,20 @@ RSpec.describe CaesarCipher do
   end
 
   it "creates a character set" do
-    expect(CaesarCipher.character_set).to be_instance_of Array
-    expect(CaesarCipher.character_set.length).to eq(27)
-    expect(CaesarCipher.character_set).to eq(@char_set)
+    expect(CaesarCipher.make_char_set).to be_instance_of Array
+    expect(CaesarCipher.make_char_set.length).to eq(27)
+    expect(CaesarCipher.make_char_set).to eq(@char_set)
   end
 
   it "creates a hash of characters" do
-    expect(CaesarCipher.character_hash(@char_set)).to be_instance_of Hash
-    expect(CaesarCipher.character_hash(@char_set).keys.length).to eq(27)
-    expect(CaesarCipher.character_hash(@char_set)['a']).to eq(0)
-    expect(CaesarCipher.character_hash(@char_set)[' ']).to eq(26)
+    expect(CaesarCipher.make_char_hash(@char_set)).to be_instance_of Hash
+    expect(CaesarCipher.make_char_hash(@char_set).keys.length).to eq(27)
+    expect(CaesarCipher.make_char_hash(@char_set)['a']).to eq(0)
+    expect(CaesarCipher.make_char_hash(@char_set)[' ']).to eq(26)
   end
 
   it "checks if character is valid" do
-    expect(CaesarCipher.valid_character?('a')).to eq(true)
-    expect(CaesarCipher.valid_character?(',')).to eq(false)
+    expect(CaesarCipher.valid_char?('a')).to eq(true)
+    expect(CaesarCipher.valid_char?(',')).to eq(false)
   end
 end
