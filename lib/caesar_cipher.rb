@@ -28,7 +28,7 @@ class CaesarCipher
     shifts = []
     i = 0
     until i == 4
-      shifts << (keys[i] + offsets[i]) % 27 #replace integer with char_set.length
+      shifts << (keys[i] + offsets[i])
       i += 1
     end
     return shifts
@@ -61,12 +61,36 @@ class CaesarCipher
     make_char_hash(make_char_set).has_key?(character)
   end
 
+  def self.index_by_char(character)
+    make_char_hash(make_char_set)[character]
+  end
+
+  def self.char_by_index(index)
+    make_char_set[index]
+  end
+
+  def self.encrypt(message, key, date)
+    message = message.downcase
+    offsets = create_offset(date)
+    keys = split_keys(key)
+    shifts = find_shifts(keys, offsets)
+    char_set = make_char_set
+    char_hash = make_char_hash(char_set)
+
+    message.each_char do |character| #until end of string
+      if valid_char?(character) #true for valid character, false if not
+        char_by_index((index_by_char(character) + shifts.first) % char_set.length) #okay... shorten this
+      end
+    end
+  end
+
   #we now have shifts as modulus in [A,B,C,D] format (no hash needed)
     #for character set (mix in)
       #designing as if we may one day want other characters
       #no need to enter characters, so we will use range to create
       #but we will create hash table for any given character set
       #hash table used to validate each character
+      #what if we use ordinal values???
 
 
     #for a given message
