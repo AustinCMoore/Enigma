@@ -24,8 +24,10 @@ class Interface
     File.write(@output, data[:encryption])
   end
 
-  # def decrypt
-  #   @enigma.decrypt(@message, @key, @date)
-  # end
+  def decrypt#according to interaction pattern this is all thats needed. refactor goal, it run without date
+    data = @enigma.decrypt(@message, @key, @date)
+    puts "Created #{@input} with the key #{data[:key]} and date #{data[:date]}"
+    File.write(@output, data[:decryption])
+  end
 
 end
