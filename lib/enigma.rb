@@ -5,12 +5,15 @@ require_relative "./defaultargs"
 class Enigma
   include DefaultArgs
 
-  def encrypt(message, key = make_key, date = todays_date)
+  def encrypt(message, key, date)
+    key = make_key if key.nil?
+    date = todays_date if date.nil?
     caesar_cipher = CaesarCipher.new(message, key, date)
     caesar_cipher.encrypt
   end
 
-  def decrypt(message, key, date = todays_date)
+  def decrypt(message, key, date)
+    date = todays_date if date.nil?
     caesar_cipher = CaesarCipher.new(message, key, date)
     caesar_cipher.decrypt
   end
