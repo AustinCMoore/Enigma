@@ -51,7 +51,7 @@ class CaesarCipher
   end
 
   def build_char_hash
-    @char_hash = make_char_hash(@char_set)
+    @char_hash = make_char_hash(build_char_set)
   end
 
   def shift_index(index, shift)
@@ -88,7 +88,6 @@ class CaesarCipher
 
   def encrypt #encrypt/decrypt doing a lot of the same things...
     build_shifts
-    build_char_set
     build_char_hash
     encode_message
     {
@@ -100,7 +99,6 @@ class CaesarCipher
 
   def decrypt
     build_shifts
-    build_char_set
     build_char_hash
     decode_message
     {

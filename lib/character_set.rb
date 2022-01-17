@@ -8,11 +8,11 @@ module CharacterSet
     ("a".."z").to_a << " "
   end
 
-  def make_char_hash(characters)
+  def make_char_hash(char_set)
     index = 0
     index_by_char = Hash.new { |hash, key| hash[key] = 0 }
-    make_char_set.each do |character|
-      index_by_char[character] += index
+    char_set.each do |char|
+      index_by_char[char] += index
       index += 1
     end
     return index_by_char

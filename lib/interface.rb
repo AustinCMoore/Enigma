@@ -20,15 +20,29 @@ class Interface
   end
 
   def encrypt
-    @data = @enigma.encrypt(@message, @key, @date)
-    print_to_user
-    File.write(@output, data[:encryption]) #boolean helper?
+    sequence('encrypt')
   end
 
   def decrypt
-    @data = @enigma.decrypt(@message, @key, @date)
+    sequence('decrypt')
+  end
+
+  def sequence(type)
+    if type == 'encrypt'
+      @data = @enigma.encrypt(@message, @key, @date)
+    elsif type == 'decrypt'
+      @data = @enigma.decrypt(@message, @key, @date)
+    end
+    write_file(type)
     print_to_user
-    File.write(@output, data[:decryption]) #boolean helper?
+  end
+
+  def write_file(type)
+    if type == 'encrypt'
+      File.write(@output, data[:encryption])
+    elsif type == 'decrypt'
+      File.write(@output, data[:decryption])
+    end
   end
 
   def print_to_user

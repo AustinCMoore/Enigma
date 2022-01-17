@@ -76,7 +76,7 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.char_set.length).to eq(0)
   end
 
-  it "creates a hash of characters" do #refactor to use mock/stub?
+  it "creates a hash of characters" do
     @caesar_cipher.build_char_hash
     expect(@caesar_cipher.char_hash).to be_instance_of Hash
     expect(@caesar_cipher.char_hash.keys.length).to eq(27)
