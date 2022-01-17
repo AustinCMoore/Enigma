@@ -6,11 +6,13 @@ class Enigma
   include DefaultArgs
 
   def encrypt(message, key = make_key, date = todays_date)
-    CaesarCipher.encrypt(message, key, date)
+    caesar_cipher = CaesarCipher.new(message, key, date)
+    data = caesar_cipher.encrypt
   end
 
-  def decrypt(cipher, key, date = todays_date)
-    CaesarCipher.decrypt(cipher, key, date)
+  def decrypt(message, key, date = todays_date)
+    caesar_cipher = CaesarCipher.new(message, key, date)
+    data = caesar_cipher.decrypt
   end
 
 end

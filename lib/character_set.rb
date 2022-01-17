@@ -1,19 +1,22 @@
-# module CharacterSet
-#   def make_char_set
-#     ("a".."z").to_a << " "
-#   end
-#
-#   def make_char_hash(characters)#refactor, passing in a char set is messy
-#     index = 0
-#     index_by_char = Hash.new { |hash, key| hash[key] = 0 }
-#     make_char_set.each do |character|
-#       index_by_char[character] += index
-#       index += 1
-#     end
-#     return index_by_char
-#   end
-#
-#   def valid_char?(char) #refactor above to improve
-#     make_char_hash(make_char_set).has_key?(char)
-#   end
-# end
+module CharacterSet
+
+  #we could eliminate the need for this with ordinals,
+  #however this design looks to a future feature where the user creates
+  #their character set. An array is a natural way to store this information,
+  #and requires less work as the character set grows. My understanding is that
+  #memory is cheaper than processing, so my design decision is to keep this.
+  def make_char_set
+    ("a".."z").to_a << " "
+  end
+
+  def make_char_hash(characters)
+    index = 0
+    index_by_char = Hash.new { |hash, key| hash[key] = 0 }
+    make_char_set.each do |character|
+      index_by_char[character] += index
+      index += 1
+    end
+    return index_by_char
+  end
+
+end

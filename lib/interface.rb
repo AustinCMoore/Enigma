@@ -12,15 +12,15 @@ class Interface
   def initialize(argv)
     @input   = argv[0]
     @output  = argv[1]
-    @key     = argv[2]
-    @date    = argv[3]
-    @message = File.read(input)
+    @key     = argv[2] #optional
+    @date    = argv[3] #optional
+    @message = File.read(input) #rename
     @enigma  = Enigma.new
   end
 
   def encrypt#according to interaction pattern this is all thats needed. refactor goal, it can pass in a key and/or date the user gives us
     data = @enigma.encrypt(@message)
-    puts "Created #{@output} with the key #{data[:key]} and date #{data[:date]}"
+    puts "Created #{@output} with the key #{data[:key]} and date #{data[:date]}" #helper
     File.write(@output, data[:encryption])
   end
 

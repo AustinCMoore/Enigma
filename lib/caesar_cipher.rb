@@ -1,141 +1,128 @@
-# require "./character_set"
+require_relative "./character_set"
 
 class CaesarCipher
-  # include CharacterSet
+  include CharacterSet
+  attr_reader :message,
+              :key,
+              :date,
+              :shifts,
+              :output,
+              :char_set,
+              :char_hash
 
-  def initialize(message, key, date) #do I need this? how can i use this
-    @message = message
+  def initialize(message, key, date)
+    @message = message.downcase
     @key     = key
-    @date    = date
+    @date  = date
+    @shifts = []
+    @output = ""
+    @char_set = []
+    @char_hash = {}
   end
 
-  #------------------------------------------------------
-
-  def self.create_offset(date)
-    split_offset((date.to_i)**2)
+  def build_offsets
+    split_offset((@date.to_i)**2)
   end
 
-  def self.split_offset(number)
-    digits = number.digits
-    offset = [digits[3], digits[2], digits[1], digits[0]] #maybe different result class?
+  def split_offset(offset) #refactor to hash
+    digits = offset.digits
+    [digits[3], digits[2], digits[1], digits[0]]
   end
 
-  def self.split_keys(key)
-    key.chars.each_cons(2).map do |duo| #maybe different result class?
-      duo.join.to_i
+  def build_keys #refactor to hash
+    @key.chars.each_cons(2).map do |char_duo|
+      char_duo.join.to_i
     end
   end
 
-#this can be refactored
-  def self.find_shifts(keys, offsets)
-    shifts = []
+  def build_shifts #refactor to use hashes so counter not necessary
+    keys = build_keys
+    offsets = build_offsets
     i = 0
     until i == 4
-      shifts << (keys[i] + offsets[i])
+      @shifts << (keys[i] + offsets[i])
       i += 1
     end
-    return shifts
+    @shifts
   end
-  #----------------------------------------------------------
-#this can be a new module
-  # def self.return_char_set
-  #   make_char_set
+
+  def build_char_set
+    @char_set = make_char_set
+  end
+
+  def build_char_hash
+    @char_hash = make_char_hash(@char_set)
+  end
+
+  def shift_index(index, shift)
+    (index + shift) % @char_set.length
+  end
+
+  def unshift_index(index, shift)
+    (index - shift) % @char_set.length
+  end
+
+  def encode_message
+    @message.each_char do |char|
+      if @char_hash.has_key?(char)
+        @output << @char_set[shift_index(@char_hash[char], @shifts.first)]
+        @shifts.rotate!
+      else
+        @output << char
+      end
+    end
+    return @output
+  end
+
+  def decode_message
+    @message.each_char do |char|
+      if @char_hash.has_key?(char)
+        @output << @char_set[unshift_index(@char_hash[char], @shifts.first)]
+        @shifts.rotate!
+      else
+        @output << char
+      end
+    end
+    return @output
+  end
+
+  # def return_cipher(text, key, date)
+  #   {
+  #     encryption: text,
+  #     key: key,
+  #     date: date
+  #   }
   # end
   #
-  # def self.return_char_hash
-  #   make_char_hash(make_char_set)
+  # def return_message(text, key, date)
+  #   {
+  #     decryption: text,
+  #     key: key,
+  #     date: date
+  #   }
   # end
 
-#ordinal value?
-  def self.make_char_set #this is static
-    characters = ("a".."z").to_a
-    characters << " "
-  end
-
-  def self.make_char_hash(characters) #this is also static?
-    index = 0
-    index_by_character = Hash.new { |hash, key| hash[key] = 0 }
-    make_char_set.each do |character|
-      index_by_character[character] += index
-      index += 1
-    end
-    return index_by_character
-  end
-
-  def self.valid_char?(character) #am i making new character set every time?
-    make_char_hash(make_char_set).has_key?(character)
-  end
-
-  def self.index_by_char(character)
-    make_char_hash(make_char_set)[character]
-  end
-
-  def self.char_by_index(index)
-    make_char_set[index]
-  end
-
-  def self.new_char(character, shift, char_set)
-    char_by_index((index_by_char(character) + shift) % char_set.length)
-  end
-
-  def self.old_char(character, shift, char_set)
-    char_by_index((index_by_char(character) - shift) % char_set.length)
-  end
-
-  def self.encode_message(message, shifts, char_set)
-    encoded = ""
-    message.each_char do |character|
-      if valid_char?(character)
-        encoded << new_char(character, shifts.first, char_set)
-        shifts = shifts.rotate #refactor
-      else
-        encoded << character
-      end
-    end
-    return encoded
-  end
-
-  def self.return_cipher(text, key, date)
+  def encrypt
+    build_shifts
+    build_char_set
+    build_char_hash
+    encode_message
     {
-      encryption: text,
-      key: key,
-      date: date
+      encryption: @output,
+      key: @key,
+      date: @date
     }
   end
 
-  def self.return_message(text, key, date)
+  def decrypt
+    build_shifts
+    build_char_set
+    build_char_hash
+    decode_message
     {
-      decryption: text,
-      key: key,
-      date: date
+      decryption: @output,
+      key: @key,
+      date: @date
     }
-  end
-
-  def self.decode_cipher(cipher, shifts, char_set)
-    decoded = ""
-    cipher.each_char do |character|
-      if valid_char?(character)
-        decoded << old_char(character, shifts.first, char_set)
-        shifts = shifts.rotate
-      else
-        decoded << character
-      end
-    end
-    return decoded
-  end
-
-  def self.encrypt(message, key, date)
-    message = message.downcase
-    shifts = find_shifts(split_keys(key), create_offset(date))
-    char_set = make_char_set
-    encoded = encode_message(message, shifts, char_set)
-    return_cipher(encoded, key, date)
-  end
-
-  def self.decrypt(cipher, key, date)
-    shifts = find_shifts(split_keys(key), create_offset(date))
-    char_set = make_char_set
-    decoded = decode_cipher(cipher, shifts, char_set)
-    return_message(decoded, key, date)
   end
 end
