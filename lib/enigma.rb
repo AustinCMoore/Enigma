@@ -1,5 +1,6 @@
-require "./caesar_cipher"
-require "./defaultargs"
+require 'date'
+require_relative "./caesar_cipher"
+require_relative "./defaultargs"
 
 class Enigma
   include DefaultArgs
