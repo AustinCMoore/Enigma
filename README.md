@@ -12,10 +12,12 @@ Ruby 2.7.2 and RSpec 3.10
 Clone this repository, then enter the following commands to your CLI:
 
 to encrypt (key and date can be considered optional)
-```ruby ./lib/encrypt.rb message.txt encrypted.txt```
+
+```ruby ./lib/encrypt.rb message.txt encrypted.txt key date```
 
 to decrypt (date can be considered optional)
-```ruby ./lib/decrypt.rb encrypted.txt decrypted.txt 82648 240818```
+
+```ruby ./lib/decrypt.rb encrypted.txt decrypted.txt key date```
 
 ## Testing
 
