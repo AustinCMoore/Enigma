@@ -19,7 +19,6 @@ RSpec.describe Enigma do
   it "makes random key" do
     expect(@enigma.make_key).to be_instance_of String
     expect(@enigma.make_key.length).to eq(5)
-    # expect(@enigma.make_key).to eq(@key)#mock method to be created
   end
 
   it "can encrypt a message with a key and date" do
@@ -46,7 +45,7 @@ RSpec.describe Enigma do
     @cipher = @enigma.encrypt("hello world", "02715", @enigma.todays_date)
     expect(@enigma.encrypt("hello world", "02715")).to eq(
       {
-        encryption: @cipher[:encryption], #needs a mock
+        encryption: @cipher[:encryption],
         key: "02715",
         date: @enigma.todays_date
       })
@@ -69,8 +68,8 @@ RSpec.describe Enigma do
     expect(@enigma.encrypt("hello world")).to be_instance_of Hash
     expect(@enigma.encrypt("hello world")).to eq(
       {
-        encryption: @encrypted[:encryption], #needs a stub
-        key: '02715', #needs a stub
+        encryption: @encrypted[:encryption],
+        key: '02715',
         date: @enigma.todays_date
       })
   end

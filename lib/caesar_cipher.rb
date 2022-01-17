@@ -24,18 +24,18 @@ class CaesarCipher
     split_offset((@date.to_i)**2)
   end
 
-  def split_offset(offset) #refactor to hash
+  def split_offset(offset)
     digits = offset.digits
     [digits[3], digits[2], digits[1], digits[0]]
   end
 
-  def build_keys #refactor to hash
+  def build_keys
     @key.chars.each_cons(2).map do |char_duo|
       char_duo.join.to_i
     end
   end
 
-  def build_shifts #refactor to use hashes so counter not necessary
+  def build_shifts
     keys = build_keys
     offsets = build_offsets
     i = 0
@@ -62,7 +62,7 @@ class CaesarCipher
     (index - shift) % @char_set.length
   end
 
-  def encode_message #decode/encode doing alot of the same things...
+  def encode_message #this & decode_message could become one method
     @message.each_char do |char|
       if @char_hash.has_key?(char)
         @output << @char_set[shift_index(@char_hash[char], @shifts.first)]
@@ -86,7 +86,7 @@ class CaesarCipher
     return @output
   end
 
-  def encrypt #encrypt/decrypt doing a lot of the same things...
+  def encrypt #This could become a sequence
     build_shifts
     build_char_hash
     encode_message

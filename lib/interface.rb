@@ -48,5 +48,4 @@ class Interface
   def print_to_user
     puts "Created #{@output} with the key #{@data[:key]} and date #{@data[:date]}"
   end
-
 end

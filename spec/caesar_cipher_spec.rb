@@ -62,7 +62,7 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.char_set).to eq([])
   end
 
-  it "creates a character set" do #refactor to use mock/stub?
+  it "creates a character set" do
     @caesar_cipher.build_char_set
     expect(@caesar_cipher.char_set).to be_instance_of Array
     expect(@caesar_cipher.char_set.length).to eq(27)
