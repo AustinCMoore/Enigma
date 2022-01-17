@@ -4,12 +4,6 @@ require './lib/caesar_cipher'
 RSpec.describe CaesarCipher do
   before (:each) do
     @caesar_cipher = CaesarCipher.new("hello, world", "02715", "040895")
-    #
-    # @char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-    #    "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-    #    "w", "x", "y", "z", " "]
-    # @encoded_message = "keder, ohulw"
-    # @decoded_message = "hello, world"
   end
 
   it "exists" do
@@ -90,21 +84,6 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.char_hash[' ']).to eq(26)
   end
 
-  # it "checks if character is valid" do
-  #   expect(@caesar_cipher.valid_char?('a', @caesar_cipher.char_hash)).to eq(true)
-  #   expect(@caesar_cipher.valid_char?(',', @caesar_cipher.char_hash)).to eq(false)
-  # end
-  #
-  # it "returns character's base index" do
-  #   expect(@caesar_cipher.index_by_char('a')).to be_instance_of Integer
-  #   expect(@caesar_cipher.index_by_char('a')).to eq(0)
-  # end
-  #
-  # xit "returns shifted index's character" do
-  #   expect(@caesar_cipher.char_by_index(0)).to be_instance_of String
-  #   expect(@caesar_cipher.char_by_index(0)).to eq('a')
-  # end
-
   it "shifts an index given an index and a shift" do
     @caesar_cipher.build_shifts
     @caesar_cipher.build_char_set
@@ -124,16 +103,6 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.unshift_index(0, 3)).to eq(24)
     expect(@caesar_cipher.unshift_index(30, 3)).to eq(0)
   end
-
-  # xit "returns new character" do
-  #   expect(@caesar_cipher.new_char('h', 3, @char_set)).to be_instance_of String
-  #   expect(@caesar_cipher.new_char('h', 3, @char_set)).to eq('k')
-  # end
-  #
-  # xit "returns old character" do
-  #   expect(@caesar_cipher.old_char('k', 3, @char_set)).to be_instance_of String
-  #   expect(@caesar_cipher.old_char('k', 3, @char_set)).to eq('h')
-  # end
 
   it "encodes message" do
     @caesar_cipher.build_shifts
@@ -155,22 +124,4 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.output).to be_instance_of String
     expect(@caesar_cipher.output).to eq("hello, world")
   end
-  #
-  # it "returns hash with encrypted message" do
-  #   expect(@caesar_cipher.return_cipher(@encoded_message, "02715", "040895")).to be_instance_of Hash
-  #   expect(@caesar_cipher.return_cipher(@encoded_message, "02715", "040895")).to eq({
-  #       encryption: "keder, ohulw",
-  #       key: "02715",
-  #       date: "040895"
-  #     })
-  # end
-  #
-  # xit "returns hash with decoded message" do
-  #   expect(@caesar_cipher.return_message(@decoded_message, "02715", "040895")).to be_instance_of Hash
-  #   expect(@caesar_cipher.return_message(@decoded_message, "02715", "040895")).to eq({
-  #       decryption: "hello, world",
-  #       key: "02715",
-  #       date: "040895"
-  #     })
-  # end
 end

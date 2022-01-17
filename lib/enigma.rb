@@ -7,12 +7,11 @@ class Enigma
 
   def encrypt(message, key = make_key, date = todays_date)
     caesar_cipher = CaesarCipher.new(message, key, date)
-    data = caesar_cipher.encrypt
+    caesar_cipher.encrypt
   end
 
   def decrypt(message, key, date = todays_date)
     caesar_cipher = CaesarCipher.new(message, key, date)
-    data = caesar_cipher.decrypt
+    caesar_cipher.decrypt
   end
-
 end

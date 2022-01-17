@@ -11,12 +11,12 @@ class CaesarCipher
               :char_hash
 
   def initialize(message, key, date)
-    @message = message.downcase
-    @key     = key
-    @date  = date
-    @shifts = []
-    @output = ""
-    @char_set = []
+    @message   = message.downcase
+    @key       = key
+    @date      = date
+    @shifts    = []
+    @output    = ""
+    @char_set  = []
     @char_hash = {}
   end
 
@@ -62,7 +62,7 @@ class CaesarCipher
     (index - shift) % @char_set.length
   end
 
-  def encode_message
+  def encode_message #decode/encode doing alot of the same things...
     @message.each_char do |char|
       if @char_hash.has_key?(char)
         @output << @char_set[shift_index(@char_hash[char], @shifts.first)]
@@ -86,23 +86,7 @@ class CaesarCipher
     return @output
   end
 
-  # def return_cipher(text, key, date)
-  #   {
-  #     encryption: text,
-  #     key: key,
-  #     date: date
-  #   }
-  # end
-  #
-  # def return_message(text, key, date)
-  #   {
-  #     decryption: text,
-  #     key: key,
-  #     date: date
-  #   }
-  # end
-
-  def encrypt
+  def encrypt #encrypt/decrypt doing a lot of the same things...
     build_shifts
     build_char_set
     build_char_hash

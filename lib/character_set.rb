@@ -1,6 +1,5 @@
 module CharacterSet
-
-  #we could eliminate the need for this with ordinals,
+  #we could eliminate the need for make_char_set with ordinals,
   #however this design looks to a future feature where the user creates
   #their character set. An array is a natural way to store this information,
   #and requires less work as the character set grows. My understanding is that
@@ -18,5 +17,4 @@ module CharacterSet
     end
     return index_by_char
   end
-
 end
