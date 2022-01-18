@@ -20,12 +20,27 @@ class CaesarCipher
     @char_hash = {}
   end
 
+  def valid_date? #emergency addition
+    @date.to_i > 31
+  end
+
+  def pad_offset(offset)
+    offset.to_s.rjust(4, "0") #emergency addition
+  end
+
   def build_offsets
-    split_offset((@date.to_i)**2)
+    offset = @date.to_i ** 2
+    if valid_date? == false #emergency addition
+      offset = pad_offset(offset)
+    end
+      split_offset(offset)
   end
 
   def split_offset(offset)
-    digits = offset.digits
+    if offset.class == String #emergency addition
+      return offset.chars.map {|digit| digit.to_i}
+    end
+    digits = offset.to_i.digits
     [digits[3], digits[2], digits[1], digits[0]]
   end
 

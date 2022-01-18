@@ -25,10 +25,26 @@ RSpec.describe CaesarCipher do
     expect(@caesar_cipher.date).to eq("040895")
   end
 
+  it "validates date" do
+    @caesar_cipher = CaesarCipher.new("hello, world", "02715", "000032")
+    expect(@caesar_cipher.valid_date?).to eq(true)
+    @caesar_cipher = CaesarCipher.new("hello, world", "02715", "000031")
+    expect(@caesar_cipher.valid_date?).to eq(false)
+  end
+
+  it "pads offsets" do
+    expect(@caesar_cipher.pad_offset(0)).to eq('0000')
+    expect(@caesar_cipher.pad_offset(999)).to eq('0999')
+  end
+
   it "builds the offset" do
     expect(@caesar_cipher.build_offsets).to be_instance_of Array
     expect(@caesar_cipher.build_offsets.length).to eq(4)
     expect(@caesar_cipher.build_offsets).to eq([1,0,2,5])
+
+    @caesar_cipher = CaesarCipher.new("hello, world", "02715", "000000")
+    expect(@caesar_cipher.build_offsets.length).to eq(4)
+    expect(@caesar_cipher.build_offsets).to eq([0,0,0,0])
   end
 
   it "splits the offset" do
